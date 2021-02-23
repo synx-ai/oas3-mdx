@@ -1,0 +1,56 @@
+{
+  "name": "openapi2md",
+  "version": "0.0.1",
+  "description": "Convert OpenAPI spec to Markdown files.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "yarn build",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "jest --config .jest.json",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "git add -A src",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/monisnap-jason/unicorn-says-hello-world.git"
+  },
+  "keywords": [
+    "openapi",
+    "openapi3",
+    "codegen",
+    "docgen",
+    "generator",
+    "documentation",
+    "markdown"
+  ],
+  "author": {
+    "name": "Carlos Rivera",
+    "email": "carlos@synx.ai",
+    "url": "https://github.com/carlosrivera"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "add": "^2.0.6",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "yarn": "^1.22.10"
+  }
+}
