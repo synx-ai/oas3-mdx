@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/monisnap-jason/unicorn-says-hello-world.git"
+    "url": "git+https://github.com/synx-ai/openapi2md"
   },
   "keywords": [
     "openapi",
