@@ -9,7 +9,7 @@ const convert = (specFile: string, outPath: string) => {
   const spec = require(specFile)
 
   if (fs.existsSync(outPath)) {
-    //ToDo: delete existing path
+    // ToDo: delete existing path
   }
 
   console.log(spec.components.schemas)
@@ -20,7 +20,7 @@ const convert = (specFile: string, outPath: string) => {
     console.log(`${key}\n\n`, schema)
   })
 
-  const pathTemplate = Handlebars.compile(fs.readFileSync(`${__dirname}/../templates/path.hdb`, 'utf8'))
+  const pathTemplate = Handlebars.compile(fs.readFileSync(path.resolve(__dirname, '../templates/path.hdb'), 'utf8'))
 
   Object.keys(spec.paths).forEach((schemaKey: string) => {
     const apiPath = (spec.paths as any)[schemaKey]
@@ -30,7 +30,6 @@ const convert = (specFile: string, outPath: string) => {
 
     Object.keys(apiPath).forEach((apiPathKey: string) => {
       const method = (apiPath as any)[apiPathKey]
-
 
       fs.writeFileSync(
         `${outPath}${schemaKey}/${apiPathKey}.md`,

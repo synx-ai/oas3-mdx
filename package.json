@@ -1,5 +1,5 @@
 {
-  "name": "openapi2md",
+  "name": "@synx-ai/openapi2md",
   "version": "0.0.1",
   "description": "Convert OpenAPI spec to Markdown files.",
   "main": "dist/index.js",
@@ -45,6 +45,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.2",
     "typescript": "^4.1.5"
   },
   "dependencies": {
