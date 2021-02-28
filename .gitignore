@@ -1,6 +1,7 @@
 /dist
 /build
 /node_modules
+/coverage
 
 package-lock.json
 yarn-error.log

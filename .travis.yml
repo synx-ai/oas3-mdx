@@ -4,7 +4,9 @@ node_js:
 
 install:
     - yarn install
+    - yarn add codecov
 script:
     - yarn lint
     - tsc
     - yarn test
+    - yarn codecov
