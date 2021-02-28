@@ -6,7 +6,6 @@ import { hideBin } from "yargs/helpers";
 import convert from "./index";
 
 const red = (text) => `\x1b[31m${text}\x1b[0m`;
-const magenta = (text) => `\x1b[35m${text}\x1b[0m`;
 const yellow = (text) => `\x1b[33m${text}\x1b[0m`;
 const green = (text) => `\x1b[32m${text}\x1b[0m`;
 
@@ -25,18 +24,19 @@ const argv = yargs(hideBin(process.argv))
       type: "string",
       default: "./build",
     },
-    template: {
+    templates: {
       alias: "t",
-      describe: "templates paths",
+      describe: "custom templates path",
       type: "string",
-      default: "./templates",
+      default: "../templates",
     },
   })
   .help().argv;
 
 convert(
   path.resolve(process.cwd(), argv.spec),
-  path.resolve(process.cwd(), argv.target)
+  path.resolve(process.cwd(), argv.target),
+  path.resolve(__dirname, argv.templates)
 )
   .then(() => {
     console.log(green("Done! ✨"));

@@ -27,31 +27,10 @@ Update an existent pet in the store
 
 | Options      |                  |
 | ------------ | ---------------- |
-| required		 | true							|
+| required     | true             |
 | content-type | application-json |
 
-**Example Value**
 
-```json
-{
-  "id": 10,
-  "name": "doggie",
-  "category": {
-    "id": 1,
-    "name": "Dogs"
-  },
-  "photoUrls": [
-    "string"
-  ],
-  "tags": [
-    {
-      "id": 0,
-      "name": "string"
-    }
-  ],
-  "status": "available"
-}
-```
 
 ## Responses
 
@@ -66,30 +45,14 @@ Update an existent pet in the store
 | ------------ | ---------------- |
 | content-type | {{@key}}         |
 
-**Example Value**
+**Example response**
 
 ```json
-{
-  "id": 10,
-  "name": "doggie",
-  "category": {
-    "id": 1,
-    "name": "Dogs"
-  },
-  "photoUrls": [
-    "string"
-  ],
-  "tags": [
-    {
-      "id": 0,
-      "name": "string"
-    }
-  ],
-  "status": "available"
-}
+{{{schemaRef @key schema ../../../schemas}}}
 ```
 
-{{/each}}
-{{/each}}
 
-{{/with}}
+{{/each}} {{! content }}
+{{/each}} {{! responses }}
+
+{{/with}} {{! method }}

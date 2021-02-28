@@ -5,12 +5,14 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "templates"
   ],
   "bin": {
     "openapi2md": "dist/cli.js"
   },
   "scripts": {
+    "example": "tsc && node dist/cli.js --spec example/petstore.json --o build/",
     "build": "tsc",
     "pretty": "yarn prettier --write src/*.ts",
     "prepare": "yarn pretty && yarn lint && yarn build",
@@ -66,6 +68,7 @@
     "add": "^2.0.6",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
+    "xml-js": "^1.6.11",
     "yargs": "^16.2.0",
     "yarn": "^1.22.10"
   }
