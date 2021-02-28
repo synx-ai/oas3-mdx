@@ -1,6 +1,6 @@
 {
   "name": "@synx-ai/openapi2md",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Convert OpenAPI spec to Markdown files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,7 +23,7 @@
     "version": "git add -A src",
     "postversion": "git push && git push --tags",
     "deploy": "npm publish --access public",
-    "postinstall": "husky install",
+    "_postinstall": "husky install",
     "postpublish": "pinst --enable"
   },
   "repository": {
