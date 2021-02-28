@@ -23,7 +23,7 @@
     "version": "git add -A src",
     "postversion": "git push && git push --tags",
     "deploy": "npm publish --access public",
-    "_postinstall": "husky install",
+    "postinstall": "husky install",
     "postpublish": "pinst --enable"
   },
   "repository": {
