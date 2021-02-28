@@ -6,3 +6,4 @@
 npm --no-git-tag-version version patch
 yarn prepare
 yarn test
+git add -A .
