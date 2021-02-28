@@ -1,53 +1,62 @@
-'use_strict'
+"use_strict";
 
-import * as fs from 'fs'
-import * as path from 'path'
-import * as Handlebars from 'handlebars'
-import * as _ from 'lodash'
+import * as fs from "fs";
+import * as path from "path";
+import * as Handlebars from "handlebars";
+import * as _ from "lodash";
 
 const convert = (specFile: string, outPath: string): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const spec = require(specFile)
+    try {
+      const spec = require(specFile);
 
-    if (fs.existsSync(outPath)) {
-      // ToDo: delete existing path
-    }
+      if (fs.existsSync(outPath)) {
+        // ToDo: delete existing path
+      }
 
-    console.log(spec.components.schemas)
+      console.log(spec.components.schemas);
 
-    Object.keys(spec.components.schemas).forEach((key: string) => {
-      const schema = (spec.components.schemas as any)[key]
+      Object.keys(spec.components.schemas).forEach((key: string) => {
+        const schema = (spec.components.schemas as any)[key];
 
-      console.log(`${key}\n\n`, schema)
-    })
+        console.log(`${key}\n\n`, schema);
+      });
 
-    const pathTemplate = Handlebars.compile(fs.readFileSync(path.resolve(__dirname, '../templates/path.hdb'), 'utf8'))
-
-    Object.keys(spec.paths).forEach((schemaKey: string) => {
-      const apiPath = (spec.paths as any)[schemaKey]
-
-      fs.mkdirSync(`${outPath}${schemaKey}`, { recursive: true })
-      console.log(`${schemaKey}`)
-
-      Object.keys(apiPath).forEach((apiPathKey: string) => {
-        const method = (apiPath as any)[apiPathKey]
-
-        fs.writeFileSync(
-          `${outPath}${schemaKey}/${apiPathKey}.md`,
-          pathTemplate({
-            slug: _.kebabCase(`${schemaKey}-${apiPathKey}`),
-            path: schemaKey,
-            httpMethod: _.toUpper(apiPathKey),
-            method: method
-          })
+      const pathTemplate = Handlebars.compile(
+        fs.readFileSync(
+          path.resolve(__dirname, "../templates/path.hdb"),
+          "utf8"
         )
+      );
 
-        console.log(`\t${apiPathKey}`)
-      })
-    })
+      Object.keys(spec.paths).forEach((schemaKey: string) => {
+        const apiPath = (spec.paths as any)[schemaKey];
 
-    resolve()
-  })
-}
+        fs.mkdirSync(`${outPath}${schemaKey}`, { recursive: true });
+        console.log(`${schemaKey}`);
 
-export default convert
+        Object.keys(apiPath).forEach((apiPathKey: string) => {
+          const method = (apiPath as any)[apiPathKey];
+
+          fs.writeFileSync(
+            `${outPath}${schemaKey}/${apiPathKey}.md`,
+            pathTemplate({
+              slug: _.kebabCase(`${schemaKey}-${apiPathKey}`),
+              path: schemaKey,
+              httpMethod: _.toUpper(apiPathKey),
+              method: method,
+            })
+          );
+
+          console.log(`\t${apiPathKey}`);
+        });
+      });
+
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export default convert;
