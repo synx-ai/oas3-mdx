@@ -7,6 +7,9 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "openapi2md": "dist/cli.js"
+  },
   "scripts": {
     "build": "tsc",
     "prepare": "yarn build",
@@ -15,11 +18,15 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "deploy": "npm publish --access public"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/synx-ai/openapi2md"
+  },
+  "bugs": {
+    "url": "https://github.com/synx-ai/openapi2md/issues"
   },
   "keywords": [
     "openapi",
@@ -53,6 +60,7 @@
     "add": "^2.0.6",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21",
+    "yargs": "^16.2.0",
     "yarn": "^1.22.10"
   }
 }
