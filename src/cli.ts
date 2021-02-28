@@ -16,41 +16,33 @@ const argv = yargs(hideBin(process.argv))
     'spec': {
       alias: 's',
       describe: 'OpenAPI specification',
+      type: 'string',
       demandOption: true
     },
     'target': {
       alias: 'o',
       describe: 'target build path',
+      type: 'string',
       default: './build'
     },
     'template': {
       alias: 't',
       describe: 'templates paths',
+      type: 'string',
       default: './templates'
     }
   })
   .help()
   .argv
 
-console.log(argv)
-
-convert(argv.spec, argv.target)
-/*
-generator.generate({
-  openapi: openapiFile,
-  base_dir: program.basedir || baseDir || process.cwd(),
-  target_dir: program.output,
-  templates: program.templates ? path.resolve(process.cwd(), program.templates) : undefined,
-  curl: program.curl,
-  template,
-  skipExistingFiles: program.skipExistingFiles,
-  deleteFolders: program.deleteFolders
-}).then(() => {
-  console.log(green('Done! ✨'));
-  console.log(yellow('Check out your shiny new API at ') + magenta(program.output) + yellow('.'));
-}).catch(err => {
-  console.error(red('Aaww 💩. Something went wrong:'));
-  console.error(red(err.stack || err.message || inspect(err, { depth: null })));
-});
-
-process.on('unhandledRejection', (err) => console.error(err));*/
+convert(
+    path.resolve(process.cwd(), argv.spec),
+    path.resolve(process.cwd(), argv.target)
+  )
+  .then(() => {
+    console.log(green('Done! ✨'));
+  })
+  .catch(err => {
+    console.error(red('Aaww 💩. Something went wrong:'));
+    console.error(red(err.stack || err.message));
+  });
