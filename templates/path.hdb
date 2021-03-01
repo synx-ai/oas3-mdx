@@ -3,9 +3,9 @@ id: {{operationId}}
 slug: {{slug}}
 ---
 
-# {{path}}
-
-**Method: {{httpMethod}}**
+```
+{{httpMethod}} {{path}}
+``` 
 
 {{#with method}}
 

@@ -34,7 +34,7 @@ const argv = yargs(hideBin(process.argv))
 convert(
   path.resolve(process.cwd(), argv.spec),
   path.resolve(process.cwd(), argv.target),
-  path.resolve(__dirname, argv.templates)
+  path.resolve(argv.templates)
 )
   .then(() => {
     console.log(green("Done! ✨"));

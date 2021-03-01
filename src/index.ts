@@ -14,9 +14,11 @@ import bundler from "./bundler";
  * @param   {any}     data the object to serialize
  * @returns {string}  a JSON serialized representation of the object
  */
-const jsonCodeBlock = (data: any): string => {
+const jsonCodeBlock = (data: any, title: string = ""): string => {
   const encoded = JSON.stringify(data, null, 2);
-  return `\`\`\`json\n${encoded}\n\`\`\``;
+  const titleTag = title.length ? ` title="${title}"` : "";
+
+  return `\`\`\`json${titleTag}\n${encoded}\n\`\`\``;
 };
 
 /**
@@ -25,7 +27,7 @@ const jsonCodeBlock = (data: any): string => {
  * @param   {any}     data the object to serialize
  * @returns {string}  a XML serialized representation of the object
  */
-const xmlCodeBlock = (name: string, data: any): string => {
+const xmlCodeBlock = (elementName: string, data: any, title: string = ""): string => {
   const options = { compact: true, spaces: 2 };
   const obj = {
     _declaration: {
@@ -34,12 +36,13 @@ const xmlCodeBlock = (name: string, data: any): string => {
         encoding: "utf-8",
       },
     },
-    [name]: data,
+    [elementName]: data,
   };
 
   const encoded = xml.json2xml(JSON.stringify(obj), options);
+  const titleTag = title.length ? ` title="${title}"` : "";
 
-  return `\`\`\`xml\n${encoded}\n\`\`\``;
+  return `\`\`\`${titleTag}xml\n${encoded}\n\`\`\``;
 };
 
 /**
@@ -63,7 +66,7 @@ const convert = (
             // ToDo: delete existing path
           }
 
-          Handlebars.registerHelper("schemaSample", (key, context) => {
+          Handlebars.registerHelper("schemaSample", (key: string, context: any) => {
             const sampler = () => OpenAPISampler.sample(context, {}, spec);
 
             if (key.toLowerCase().includes("xml")) {
@@ -75,6 +78,28 @@ const convert = (
 
             // defaults to json code block
             return jsonCodeBlock(sampler());
+          });
+
+          Handlebars.registerHelper(
+            "schemaSampleWithTitle",
+            (key: string, context: any, title: string) => {
+              const sampler = () => OpenAPISampler.sample(context, {}, spec);
+
+              if (key.toLowerCase().includes("xml")) {
+                const name = Object.prototype.hasOwnProperty.call(context, "xml")
+                  ? context.xml.name
+                  : "item";
+                return xmlCodeBlock(name, sampler(), title);
+              }
+
+              // defaults to json code block
+              return jsonCodeBlock(sampler(), title);
+            }
+          );
+
+          Handlebars.registerHelper("firstKey", (context: any) => {
+            // returns firts key for an object, useful for default variables
+            return Object.keys(context)[0];
           });
 
           let pathTemplate;
