@@ -4,9 +4,9 @@ node_js:
 
 install:
     - yarn install
-    - yarn add codecov
+    - yarn add coveralls
 script:
     - yarn lint
     - tsc
     - yarn test
-    - yarn codecov --disable=gcov
+    - yarn coveralls < coverage/lcov.info
