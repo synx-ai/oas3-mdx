@@ -1,9 +1,13 @@
 const convert = require('../dist').default;
 const bundler = require('../dist/bundler').default;
+const OpenAPISampler = require('openapi-sampler');
 
 bundler('../example/petstore.json', './')
-  .then(scheme => {
-    // console.log(scheme);
+  .then(spec => {
+    console.log(OpenAPISampler.sample(spec.components.schemas.Pet, {}, spec));
+  })
+  .catch(err => {
+    console.error(err);
   })
 
 convert('../example/petstore.json', './build')
@@ -13,4 +17,3 @@ convert('../example/petstore.json', './build')
   .catch(err => {
     console.error(err);
   })
-//console.log(convert('../example/petstore.json', './build'));

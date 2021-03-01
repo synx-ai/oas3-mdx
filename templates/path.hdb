@@ -5,11 +5,11 @@ slug: {{slug}}
 
 # {{path}}
 
-**Method: {{method}}**
+**Method: {{httpMethod}}**
 
 {{#with method}}
 
-{{description}}
+{{#if summary}}**{{summary}}: **{{/if}}{{description}}
 
 
 ## Parameters
@@ -20,17 +20,26 @@ slug: {{slug}}
 | {{name}} | {{in}} | {{schema.type}} | {{#if required}}true{{else}}false{{/if}} | {{description}} |
 {{/each}}
 
+{{#if requestBody}}
+{{#with requestBody}}
 
 ## Request Body
 
-Update an existent pet in the store
+{{#each content}}
 
-| Options      |                  |
+{{description}}
+
+| Headers      |                  |
 | ------------ | ---------------- |
-| required     | true             |
-| content-type | application-json |
+| content-type | {{@key}}         |
 
+**Example `requestBody` for `{{@key}}`**
 
+{{{schemaSample @key schema}}}
+
+{{/each}} {{! content }}
+{{/with}} {{! requestBody }}
+{{/if}}   {{! requestBody }}
 
 ## Responses
 
@@ -45,11 +54,9 @@ Update an existent pet in the store
 | ------------ | ---------------- |
 | content-type | {{@key}}         |
 
-**Example response**
+**Example `response` for `{{@key}}`**
 
-```json
-{{{schemaRef @key schema}}}
-```
+{{{schemaSample @key schema}}}
 
 
 {{/each}} {{! content }}
