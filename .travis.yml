@@ -9,4 +9,4 @@ script:
     - yarn lint
     - tsc
     - yarn test
-    - yarn codecov
+    - yarn codecov --disable=gcov

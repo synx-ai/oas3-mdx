@@ -1,5 +1,5 @@
 ---
-id: {{slug}}
+id: operationId
 slug: {{slug}}
 ---
 
@@ -48,7 +48,7 @@ Update an existent pet in the store
 **Example response**
 
 ```json
-{{{schemaRef @key schema ../../../schemas}}}
+{{{schemaRef @key schema}}}
 ```
 
 
