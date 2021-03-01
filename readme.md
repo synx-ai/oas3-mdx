@@ -10,12 +10,12 @@ Convert OpenAPI v3 spec into a customizable directory of markdown files. The pur
 
 ### yarn
 ```console
-yarn add openapi2md
+yarn add @synx-ai/openapi2md
 ```
 
 ### npm
 ```console
-npm install openapi2md
+npm install @synx-ai/openapi2md
 ```
 
 
@@ -23,7 +23,7 @@ npm install openapi2md
 
 ### CLI
 ```console
-Usage: openapi2md -s [file] -o [target path] -t [template path]
+Usage: openapi2md --specs [file] --target [target path] --templates [template path]
 
 Options:
       --version   Show version number                                  [boolean]
