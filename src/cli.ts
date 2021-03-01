@@ -10,26 +10,24 @@ const yellow = (text) => `\x1b[33m${text}\x1b[0m`;
 const green = (text) => `\x1b[32m${text}\x1b[0m`;
 
 const argv = yargs(hideBin(process.argv))
-  .usage(yellow("Usage: $0 -s [file] -o [target path] -t [template path]"))
-  .options({
-    spec: {
-      alias: "s",
-      describe: "OpenAPI specification",
-      type: "string",
-      demandOption: true,
-    },
-    target: {
-      alias: "o",
-      describe: "target build path",
-      type: "string",
-      default: "./build",
-    },
-    templates: {
-      alias: "t",
-      describe: "custom templates path",
-      type: "string",
-      default: "../templates",
-    },
+  .usage(yellow("Usage: $0 --specs [file] --target [target path] --templates [template path]"))
+  .option("spec", {
+    alias: "s",
+    describe: "OpenAPI specification",
+    type: "string",
+    demandOption: true,
+  })
+  .option("target", {
+    alias: "o",
+    describe: "target build path",
+    type: "string",
+    default: "./build",
+  })
+  .option("templates", {
+    alias: "t",
+    describe: "custom templates path",
+    type: "string",
+    default: "../templates",
   })
   .help().argv;
 
@@ -43,5 +41,5 @@ convert(
   })
   .catch((err) => {
     console.error(red("Aaww 💩. Something went wrong:"));
-    console.error(red(err.stack || err.message));
+    console.error(red(err || err.stack || err.message));
   });

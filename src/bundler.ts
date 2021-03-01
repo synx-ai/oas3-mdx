@@ -11,7 +11,6 @@
  */
 
 import * as fs from "fs";
-import * as path from "path";
 import * as http from "http";
 import * as https from "https";
 import * as YAML from "js-yaml";
@@ -59,7 +58,7 @@ const getContentFromURL = (url: string) => {
 
 const getFileContent = (filePath: string) => {
   return new Promise((resolve, reject) => {
-    fs.readFile(path.resolve(__dirname, filePath), (err, content) => {
+    fs.readFile(filePath, (err, content) => {
       if (err) {
         getContentFromURL(filePath)
           .catch(reject)
@@ -119,8 +118,8 @@ const bundler = (filePath: string, baseDir: string): Promise<any> => {
                       resolve(bundledJSON);
                     }
                   })
-                  .catch(() => {
-                    reject("Invalid OpenAPI file");
+                  .catch((err) => {
+                    reject("Invalid OpenAPI file: " + err.message);
                   });
               })
               .catch(() => {

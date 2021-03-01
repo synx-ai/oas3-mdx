@@ -77,24 +77,28 @@ const convert = (
             return jsonCodeBlock(sampler());
           });
 
-          const pathTemplate = Handlebars.compile(
-            fs.readFileSync(path.resolve(__dirname, templatePath, "path.hdb"), "utf8")
-          );
+          let pathTemplate;
+
+          if (fs.existsSync(path.resolve(process.cwd(), templatePath, "path.hdb"))) {
+            pathTemplate = Handlebars.compile(
+              fs.readFileSync(path.resolve(process.cwd(), templatePath, "path.hdb"), "utf8")
+            );
+          } else if (fs.existsSync(path.resolve(__dirname, templatePath, "path.hdb"))) {
+            pathTemplate = Handlebars.compile(
+              fs.readFileSync(path.resolve(__dirname, templatePath, "path.hdb"), "utf8")
+            );
+          }
 
           // iterate paths
           Object.keys(spec.paths).forEach((pathKey: string) => {
             const apiPath = (spec.paths as any)[pathKey];
 
-            // console.log(pathKey, apiPath);
             // try to create output paths
             fs.mkdirSync(`${outPath}${pathKey}`, { recursive: true });
 
             Object.keys(apiPath).forEach((methodKey: string) => {
               const method = (apiPath as any)[methodKey];
 
-              if (Object.prototype.hasOwnProperty.call(method, "requestBody")) {
-                console.log(method.requestBody);
-              }
               // render the path using Handlebars and save it
               fs.writeFileSync(
                 `${outPath}${pathKey}/${methodKey}.md`,
