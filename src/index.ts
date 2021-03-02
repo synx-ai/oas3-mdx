@@ -6,8 +6,23 @@ import * as Handlebars from "handlebars";
 import * as _ from "lodash";
 import * as xml from "xml-js";
 import * as OpenAPISampler from "openapi-sampler";
+import * as OpenAPISnippet from "openapi-snippet";
+
 import * as prettier from "prettier";
 import bundler from "./bundler";
+
+/**
+ * Helper function to render a block of code
+ * @param   {any}     data  the code as encoded string
+ * @param   {any}     lang  code languaje
+ * @param   {any}     title snippet title
+ * @returns {string}  a JSON serialized representation of the object
+ */
+const codeBlock = (data: string, lang: string = "", title: string = ""): string => {
+  const titleTag = title.length ? ` title="${title}"` : "";
+
+  return `\`\`\`${lang}${titleTag}\n${data}\n\`\`\``;
+};
 
 /**
  * Helper function to serialize an object to JSON
@@ -45,6 +60,17 @@ const xmlCodeBlock = (elementName: string, data: any, title: string = ""): strin
   return `\`\`\`${titleTag}xml\n${encoded}\n\`\`\``;
 };
 
+type Optional = {
+  /** @default "./build/" */
+  outPath?: string;
+
+  /** @default "../templates/" */
+  templatePath?: string;
+
+  /** @default ["curl"] */
+  snippetTargets?: string[];
+};
+
 /**
  * Convert openapi spec to markdown
  * @param   {string}    specFile specification file
@@ -52,8 +78,14 @@ const xmlCodeBlock = (elementName: string, data: any, title: string = ""): strin
  * @param   {string}    templatePath path to markdown templates
  * @returns {Promise<void>}
  */
-const convert = (specFile: string, outPath: string, templatePath: string = "../templates/"): Promise<void> => {
+const convert = (specFile: string, options: Optional = {}): Promise<void> => {
   return new Promise((resolve, reject) => {
+    const {
+      outPath = path.resolve(process.cwd(), "./build"),
+      templatePath = "../templates/",
+      snippetTargets = ["shell"],
+    } = options;
+
     try {
       // load the spec from a json into an object
       bundler(specFile, "./")
@@ -61,6 +93,11 @@ const convert = (specFile: string, outPath: string, templatePath: string = "../t
           if (fs.existsSync(outPath)) {
             // ToDo: delete existing path
           }
+
+          Handlebars.registerHelper("codeSnippet", (content: string, lang: string, title: string) => {
+            // render code block
+            return codeBlock(content, lang, title);
+          });
 
           Handlebars.registerHelper("schemaSample", (key: string, context: any) => {
             const sampler = () => OpenAPISampler.sample(context, {}, spec);
@@ -91,6 +128,11 @@ const convert = (specFile: string, outPath: string, templatePath: string = "../t
             return Object.keys(context)[0];
           });
 
+          Handlebars.registerHelper("rawBlock", (context: any) => {
+            // returns firts key for an object, useful for default variables
+            return context.fn();
+          });
+
           let pathTemplate;
 
           if (fs.existsSync(path.resolve(process.cwd(), templatePath, "path.hdb"))) {
@@ -115,6 +157,15 @@ const convert = (specFile: string, outPath: string, templatePath: string = "../t
             Object.keys(apiPath).forEach((methodKey: string) => {
               const method = (apiPath as any)[methodKey];
 
+              // generate snippets for this endpoint
+              const generatedCode = OpenAPISnippet.getEndpointSnippets(spec, pathKey, methodKey, snippetTargets);
+
+              Object.values(generatedCode.snippets).forEach((snippet: { [k: string]: any }) => {
+                const { id } = snippet as any;
+
+                snippet.lang = id.split("_")[0].replace("node", "javascript");
+              });
+
               // render the path using Handlebars and save it
               fs.writeFileSync(
                 `${outPath}${pathKey}/${methodKey}.md`,
@@ -124,6 +175,7 @@ const convert = (specFile: string, outPath: string, templatePath: string = "../t
                     path: pathKey,
                     httpMethod: _.toUpper(methodKey),
                     method: method,
+                    snippets: generatedCode.snippets,
                   }),
                   {
                     parser: "markdown",

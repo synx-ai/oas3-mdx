@@ -39,6 +39,12 @@ slug: {{slug}}
 {{/with}} {{! requestBody }}
 {{/if}}   {{! requestBody }}
 
+## Code Snippets
+
+{{#each ../snippets}}
+{{{codeSnippet content lang title}}}
+{{/each}}
+
 ## Responses
 
 {{#each responses}}

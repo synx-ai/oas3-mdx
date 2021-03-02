@@ -1,6 +1,6 @@
 {
-  "name": "@synx-ai/openapi2md",
-  "version": "0.2.4",
+  "name": "@synx-ai/oas3-mdx",
+  "version": "0.3.5",
   "description": "Convert OpenAPI spec to Markdown files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
     "templates"
   ],
   "bin": {
-    "openapi2md": "dist/cli.js"
+    "oas3-mdx": "dist/cli.js"
   },
   "scripts": {
     "example": "tsc && node dist/cli.js --spec example/petstore.json --o build/",
@@ -28,19 +28,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/synx-ai/openapi2md"
+    "url": "git+https://github.com/synx-ai/oas3-mdx"
   },
   "bugs": {
-    "url": "https://github.com/synx-ai/openapi2md/issues"
+    "url": "https://github.com/synx-ai/oas3-mdx/issues"
   },
   "keywords": [
+    "oas3",
     "openapi",
     "openapi3",
     "codegen",
     "docgen",
     "generator",
     "documentation",
-    "markdown"
+    "markdown",
+    "mdx"
   ],
   "author": {
     "name": "Carlos Rivera",
@@ -70,6 +72,7 @@
     "lodash": "^4.17.21",
     "oas-validator": "^5.0.5",
     "openapi-sampler": "^1.0.0-beta.18",
+    "openapi-snippet": "^0.9.2",
     "prettier": "^2.2.1",
     "xml-js": "^1.6.11",
     "yargs": "^16.2.0",

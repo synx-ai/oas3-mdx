@@ -30,14 +30,20 @@ const argv = yargs(hideBin(process.argv))
     type: "string",
     default: "../templates",
   })
+  .option("snippets", {
+    alias: "c",
+    describe: "code snippet targets",
+    type: "string",
+    default: "shell",
+  })
   .help().argv;
 
 // call the convert function from ./index.js
-convert(
-  path.resolve(process.cwd(), argv.spec),
-  path.resolve(process.cwd(), argv.target),
-  path.resolve(argv.templates)
-)
+convert(path.resolve(process.cwd(), argv.spec), {
+  outPath: path.resolve(process.cwd(), argv.target),
+  templatePath: path.resolve(argv.templates),
+  snippetTargets: argv.snippets.split(","),
+})
   .then(() => {
     console.log(green("Done! ✨"));
   })
