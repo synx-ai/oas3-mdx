@@ -5,7 +5,7 @@ slug: {{slug}}
 
 ```
 {{httpMethod}} {{path}}
-``` 
+```
 
 {{#with method}}
 
@@ -33,9 +33,7 @@ slug: {{slug}}
 | ------------ | ---------------- |
 | content-type | {{@key}}         |
 
-**Example `requestBody` for `{{@key}}`**
-
-{{{schemaSample @key schema}}}
+{{{schemaSampleWithTitle @key schema "Example request"}}}
 
 {{/each}} {{! content }}
 {{/with}} {{! requestBody }}

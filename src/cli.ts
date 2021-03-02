@@ -9,6 +9,7 @@ const red = (text) => `\x1b[31m${text}\x1b[0m`;
 const yellow = (text) => `\x1b[33m${text}\x1b[0m`;
 const green = (text) => `\x1b[32m${text}\x1b[0m`;
 
+// this call handles input from argv's and converts it into an object
 const argv = yargs(hideBin(process.argv))
   .usage(yellow("Usage: $0 --specs [file] --target [target path] --templates [template path]"))
   .option("spec", {
@@ -31,6 +32,7 @@ const argv = yargs(hideBin(process.argv))
   })
   .help().argv;
 
+// call the convert function from ./index.js
 convert(
   path.resolve(process.cwd(), argv.spec),
   path.resolve(process.cwd(), argv.target),

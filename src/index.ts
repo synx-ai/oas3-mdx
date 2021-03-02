@@ -52,11 +52,7 @@ const xmlCodeBlock = (elementName: string, data: any, title: string = ""): strin
  * @param   {string}    templatePath path to markdown templates
  * @returns {Promise<void>}
  */
-const convert = (
-  specFile: string,
-  outPath: string,
-  templatePath: string = "../templates/"
-): Promise<void> => {
+const convert = (specFile: string, outPath: string, templatePath: string = "../templates/"): Promise<void> => {
   return new Promise((resolve, reject) => {
     try {
       // load the spec from a json into an object
@@ -70,9 +66,7 @@ const convert = (
             const sampler = () => OpenAPISampler.sample(context, {}, spec);
 
             if (key.toLowerCase().includes("xml")) {
-              const name = Object.prototype.hasOwnProperty.call(context, "xml")
-                ? context.xml.name
-                : "item";
+              const name = Object.prototype.hasOwnProperty.call(context, "xml") ? context.xml.name : "item";
               return xmlCodeBlock(name, sampler());
             }
 
@@ -80,22 +74,17 @@ const convert = (
             return jsonCodeBlock(sampler());
           });
 
-          Handlebars.registerHelper(
-            "schemaSampleWithTitle",
-            (key: string, context: any, title: string) => {
-              const sampler = () => OpenAPISampler.sample(context, {}, spec);
+          Handlebars.registerHelper("schemaSampleWithTitle", (key: string, context: any, title: string) => {
+            const sampler = () => OpenAPISampler.sample(context, {}, spec);
 
-              if (key.toLowerCase().includes("xml")) {
-                const name = Object.prototype.hasOwnProperty.call(context, "xml")
-                  ? context.xml.name
-                  : "item";
-                return xmlCodeBlock(name, sampler(), title);
-              }
-
-              // defaults to json code block
-              return jsonCodeBlock(sampler(), title);
+            if (key.toLowerCase().includes("xml")) {
+              const name = Object.prototype.hasOwnProperty.call(context, "xml") ? context.xml.name : "item";
+              return xmlCodeBlock(name, sampler(), title);
             }
-          );
+
+            // defaults to json code block
+            return jsonCodeBlock(sampler(), title);
+          });
 
           Handlebars.registerHelper("firstKey", (context: any) => {
             // returns firts key for an object, useful for default variables
@@ -112,6 +101,8 @@ const convert = (
             pathTemplate = Handlebars.compile(
               fs.readFileSync(path.resolve(__dirname, templatePath, "path.hdb"), "utf8")
             );
+          } else {
+            reject("Can not find templates path");
           }
 
           // iterate paths
