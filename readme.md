@@ -11,16 +11,37 @@ Convert OpenAPI v3 spec into a directory of markdown files based on your spec pa
 
 ### yarn
 ```console
-yarn add @synx-ai/openapi2md
+yarn add @synx-ai/oas3-mdx
 ```
 
 ### npm
 ```console
-npm install @synx-ai/openapi2md
+npm install @synx-ai/oas3-mdx
 ```
 
 
 ## Basic usage
+
+### CLI
+```console
+Usage: oas3-mdx --specs [file] --target [target path] --templates [template path] --snippets [string with targets]
+
+Options:
+      --version   Show version number                         [boolean]
+  -s, --spec      OpenAPI specification                      [required]
+  -o, --target    target build path                [default: "./build"]
+  -t, --template  templates paths              [default: "./templates"]
+  -c, --snippets  comma separated targets            [default: "shell"]
+      --help      Show help
+```
+
+### JavaScript
+```javascript
+const convert = require('openapi2md').default;
+
+// optional arguments are expected as an object, ie:
+convert('./example/petstore.json' /*, { outPath: 'my_path' }*/);
+```
 
 ### Options
 
@@ -29,27 +50,35 @@ npm install @synx-ai/openapi2md
 | `OpenAPI spec`     | --spec       | specFile             | _None_        |
 | `Target build dir` | --target     | outPath              | `./build`     |
 | `Templates dir`    | --templates  | templatePath         | `./templates` |
+| `Snippet targets`  | --snipetts   | snippetTargets       | `["shell"]`   |
 
 The tool will try to load the `--templates` relative to current working path first, then will fallback to library path.
 
-### CLI
-```console
-Usage: openapi2md --specs [file] --target [target path] --templates [template path]
+### Valid Snippet Targets
+Currently, OpenAPI Snippet supports the following targets (depending on the HTTP Snippet library):
 
-Options:
-      --version   Show version number                         [boolean]
-  -s, --spec      OpenAPI specification                      [required]
-  -o, --target    target build path                [default: "./build"]
-  -t, --template  templates paths              [default: "./templates"]
-      --help      Show help
-```
-
-### JavaScript
-```javascript
-const convert = require('openapi2md').default;
-
-convert('./example/petstore.json', './build');
-```
+* `c_libcurl` (default)
+* `csharp_restsharp` (default)
+* `go_native` (default)
+* `java_okhttp`
+* `java_unirest` (default)
+* `javascript_jquery`
+* `javascript_xhr` (default)
+* `node_native` (default)
+* `node_request`
+* `node_unirest`
+* `objc_nsurlsession` (default)
+* `ocaml_cohttp` (default)
+* `php_curl` (default)
+* `php_http1`
+* `php_http2`
+* `python_python3` (default)
+* `python_requests`
+* `ruby_native` (default)
+* `shell_curl` (default)
+* `shell_httpie`
+* `shell_wget`
+* `swift_nsurlsession` (default)
 
 ### Templates
 
