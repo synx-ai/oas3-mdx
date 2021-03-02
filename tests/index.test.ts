@@ -8,9 +8,7 @@ const fileThatExistsInAnotherFormat = "./readme.md";
 const urlThatExists = "https://petstore3.swagger.io/api/v3/openapi.json";
 const urlThatNotExists = "https://petstore3.synx.io/api/v3/openapi.json";
 
-
 describe("convert()", () => {
-
 
   it("should execute from file", () => {
     return expect(convert(fileThatExists, "./build")).resolves.toBeUndefined();
