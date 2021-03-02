@@ -55,6 +55,19 @@ convert('./example/petstore.json', './build');
 
 For every [**operation**](https://swagger.io/docs/specification/paths-and-operations/) in `paths`, object with all references resolved will be passed to `templates/path.hdb`, please refer to default template for an example in how to use it.
 
+Please note that before saving, prettify will be executed to format the output, you can disable it using the `<!-- prettier-ignore-start -->` tag, exmaple:
+
+```html
+<!-- prettier-ignore-start -->
+
+<Tabs defaultValue="{{someVar}}" values={[
+{{#each content}}
+  { label: "{{@key}}", value: "{{@key}}" },
+{{/each}}
+]}>
+
+<!-- prettier-ignore-end -->
+```
 
 ## Roadmap
 - [X] Create a cli.js file to execute commands using yarn or npm
