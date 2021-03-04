@@ -1,6 +1,6 @@
 {
   "name": "@synx-ai/oas3-mdx",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "Convert OpenAPI spec to Markdown files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

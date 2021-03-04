@@ -45,7 +45,7 @@ describe("convert()", () => {
 
   // this will test a file load from web, also the format is YAML instead JSON, and will create examples
   it("should execute from url", () => {
-    return expect(convert(urlThatExists, { outPath: "./build", snippetTargets: ["node", "python"] })).rejects.toBeDefined();
+    return expect(convert(urlThatExists, { outPath: "./build", snippetTargets: ["node", "python"] })).resolves.toBeUndefined();
   });
 
   // this will fail to load a file from web
