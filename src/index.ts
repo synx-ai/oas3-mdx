@@ -65,7 +65,7 @@ type Optional = {
   outPath?: string;
 
   /** @default "../templates/" */
-  templatePath?: string;
+  templatesPath?: string;
 
   /** @default ["curl"] */
   snippetTargets?: string[];
@@ -78,14 +78,14 @@ type Optional = {
  * Convert openapi spec to markdown
  * @param   {string}    specFile specification file
  * @param   {string}    outPath path to write documents
- * @param   {string}    templatePath path to markdown templates
+ * @param   {string}    templatesPath path to markdown templates
  * @returns {Promise<void>}
  */
 const convert = (specFile: string, options: Optional = {}): Promise<void> => {
   return new Promise((resolve, reject) => {
     const {
       outPath = path.resolve(process.cwd(), "./build"),
-      templatePath = "../templates/",
+      templatesPath = "../templates/",
       snippetTargets = ["shell"],
       prettierParser = "mdx",
     } = options;
@@ -139,13 +139,13 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
 
           let pathTemplate;
 
-          if (fs.existsSync(path.resolve(process.cwd(), templatePath, "path.hdb"))) {
+          if (fs.existsSync(path.resolve(process.cwd(), templatesPath, "path.hdb"))) {
             pathTemplate = Handlebars.compile(
-              fs.readFileSync(path.resolve(process.cwd(), templatePath, "path.hdb"), "utf8")
+              fs.readFileSync(path.resolve(process.cwd(), templatesPath, "path.hdb"), "utf8")
             );
-          } else if (fs.existsSync(path.resolve(__dirname, templatePath, "path.hdb"))) {
+          } else if (fs.existsSync(path.resolve(__dirname, templatesPath, "path.hdb"))) {
             pathTemplate = Handlebars.compile(
-              fs.readFileSync(path.resolve(__dirname, templatePath, "path.hdb"), "utf8")
+              fs.readFileSync(path.resolve(__dirname, templatesPath, "path.hdb"), "utf8")
             );
           } else {
             reject("Can not find templates path");

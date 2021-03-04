@@ -47,7 +47,7 @@ const argv = yargs(hideBin(process.argv))
 // call the convert function from ./index.js
 convert(path.resolve(process.cwd(), argv.spec), {
   outPath: path.resolve(process.cwd(), argv.target),
-  templatePath: path.resolve(argv.templates),
+  templatesPath: path.resolve(argv.templates),
   snippetTargets: argv.snippets.split(","),
   prettierParser: argv.parser,
 })

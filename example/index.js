@@ -1,21 +1,40 @@
-const convert = require('../dist').default;
-const bundler = require('../dist/bundler').default;
-const OpenAPISampler = require('openapi-sampler');
+const convert = require("../dist").default;
 
-console.log(process.cwd())
-/*
-bundler('example/petstore.json', './')
-  .then(spec => {
-    //console.log(OpenAPISampler.sample(spec.components.schemas.Pet, {}, spec));
-  })
-  .catch(err => {
-    console.error(err);
-  })*/
-
-convert('example/petstore.json', { outPath: './build', snippetTargets: ["node", "python"] })
+// converts to markdown using default template
+convert("example/specs/simple.yaml", {
+  outPath: "./example/build/md",
+  snippetTargets: ["node"],
+  prettierParser: "markdown",
+})
   .then(() => {
-    console.log("Finished.")
+    console.log(`File 'example/specs/simple.yaml' converted to markdown.`);
   })
-  .catch(err => {
+  .catch((err) => {
     console.error(err);
+  });
+
+// converts to mdx using default template
+convert("example/specs/simple.yaml", {
+  outPath: "./example/build/mdx",
+  snippetTargets: ["shell", "python"],
+  templatesPath: "example/templates/mdx",
+  prettierParser: "markdown",
+})
+  .then(() => {
+    console.log(`File 'example/specs/simple.yaml' converted to mdx.`);
   })
+  .catch((err) => {
+    console.error(err);
+  });
+
+// converts a complex file
+convert("example/specs/petstore.json", {
+  outPath: "./build",
+  snippetTargets: ["node", "python"]
+})
+  .then(() => {
+    console.log("Finished.");
+  })
+  .catch((err) => {
+    console.error(err);
+  });

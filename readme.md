@@ -30,7 +30,7 @@ Options:
       --version   Show version number                         [boolean]
   -s, --spec      OpenAPI specification                      [required]
   -o, --target    target build path                [default: "./build"]
-  -t, --template  templates paths              [default: "./templates"]
+  -t, --templates templates path               [default: "./templates"]
   -c, --snippets  comma separated targets            [default: "shell"]
       --help      Show help
 ```
@@ -49,7 +49,7 @@ convert('./example/petstore.json' /*, { outPath: 'my_path' }*/);
 | ------------------ | ------------ | -------------------- | ------------- |
 | `OpenAPI spec`     | --spec       | specFile             | _None_        |
 | `Target build dir` | --target     | outPath              | `./build`     |
-| `Templates dir`    | --templates  | templatePath         | `./templates` |
+| `Templates dir`    | --templates  | templatesPath        | `./templates` |
 | `Snippet targets`  | --snipetts   | snippetTargets       | `["shell"]`   |
 | `Prettier parser`  | --parser     | prettierParser       | `mdx`         |
 

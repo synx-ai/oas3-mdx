@@ -1,6 +1,6 @@
 {
   "name": "@synx-ai/oas3-mdx",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Convert OpenAPI spec to Markdown files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -62,6 +62,7 @@
     "husky": "^5.1.1",
     "jest": "^26.6.3",
     "pinst": "^2.1.6",
+    "speccy": "^0.11.0",
     "ts-jest": "^26.5.2",
     "typescript": "^4.1.5"
   },
