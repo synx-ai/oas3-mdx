@@ -36,6 +36,12 @@ const argv = yargs(hideBin(process.argv))
     type: "string",
     default: "shell",
   })
+  .option("parser", {
+    alias: "p",
+    describe: "prettier parser",
+    type: "string",
+    default: "mdx",
+  })
   .help().argv;
 
 // call the convert function from ./index.js
@@ -43,6 +49,7 @@ convert(path.resolve(process.cwd(), argv.spec), {
   outPath: path.resolve(process.cwd(), argv.target),
   templatePath: path.resolve(argv.templates),
   snippetTargets: argv.snippets.split(","),
+  prettierParser: argv.parser,
 })
   .then(() => {
     console.log(green("Done! ✨"));

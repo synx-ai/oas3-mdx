@@ -69,6 +69,9 @@ type Optional = {
 
   /** @default ["curl"] */
   snippetTargets?: string[];
+
+  /** @default "../templates/" */
+  prettierParser?: string;
 };
 
 /**
@@ -84,6 +87,7 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
       outPath = path.resolve(process.cwd(), "./build"),
       templatePath = "../templates/",
       snippetTargets = ["shell"],
+      prettierParser = "mdx",
     } = options;
 
     try {
@@ -115,7 +119,7 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
             const sampler = () => OpenAPISampler.sample(context, {}, spec);
 
             if (key.toLowerCase().includes("xml")) {
-              const name = Object.prototype.hasOwnProperty.call(context, "xml") ? context.xml.name : "item";
+              const name = Object.prototype.hasOwnProperty.call(context, "xml") ? context.xml.name : "Data";
               return xmlCodeBlock(name, sampler(), title);
             }
 
@@ -157,31 +161,34 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
             Object.keys(apiPath).forEach((methodKey: string) => {
               const method = (apiPath as any)[methodKey];
 
-              // generate snippets for this endpoint
-              const generatedCode = OpenAPISnippet.getEndpointSnippets(spec, pathKey, methodKey, snippetTargets);
+              // see if this method isn't ignored
+              if (!Object.prototype.hasOwnProperty.call(method, "x-docgenIgnore")) {
+                // generate snippets for this endpoint
+                const generatedCode = OpenAPISnippet.getEndpointSnippets(spec, pathKey, methodKey, snippetTargets);
 
-              Object.values(generatedCode.snippets).forEach((snippet: { [k: string]: any }) => {
-                const { id } = snippet as any;
+                Object.values(generatedCode.snippets).forEach((snippet: { [k: string]: any }) => {
+                  const { id } = snippet as any;
 
-                snippet.lang = id.split("_")[0].replace("node", "javascript");
-              });
+                  snippet.lang = id.split("_")[0].replace("node", "javascript");
+                });
 
-              // render the path using Handlebars and save it
-              fs.writeFileSync(
-                `${outPath}${pathKey}/${methodKey}.md`,
-                prettier.format(
-                  pathTemplate({
-                    slug: _.kebabCase(`${pathKey}-${methodKey}`),
-                    path: pathKey,
-                    httpMethod: _.toUpper(methodKey),
-                    method: method,
-                    snippets: generatedCode.snippets,
-                  }),
-                  {
-                    parser: "markdown",
-                  }
-                )
-              );
+                // render the path using Handlebars and save it
+                fs.writeFileSync(
+                  `${outPath}${pathKey}/${methodKey}.md`,
+                  prettier.format(
+                    pathTemplate({
+                      slug: _.kebabCase(`${pathKey}-${methodKey}`),
+                      path: pathKey,
+                      httpMethod: _.toUpper(methodKey),
+                      method: method,
+                      snippets: generatedCode.snippets,
+                    }),
+                    {
+                      parser: prettierParser,
+                    }
+                  )
+                );
+              }
             });
           });
 

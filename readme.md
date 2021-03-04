@@ -51,11 +51,12 @@ convert('./example/petstore.json' /*, { outPath: 'my_path' }*/);
 | `Target build dir` | --target     | outPath              | `./build`     |
 | `Templates dir`    | --templates  | templatePath         | `./templates` |
 | `Snippet targets`  | --snipetts   | snippetTargets       | `["shell"]`   |
+| `Prettier parser`  | --parser     | prettierParser       | `mdx`         |
 
 The tool will try to load the `--templates` relative to current working path first, then will fallback to library path.
 
 ### Valid Snippet Targets
-Currently, OpenAPI Snippet supports the following targets (depending on the HTTP Snippet library):
+Currently, OpenAPI Snippet supports the following targets from [HTTP Snippet](https://github.com/Kong/httpsnippet) library:
 
 * `c_libcurl` (default)
 * `csharp_restsharp` (default)
@@ -80,6 +81,30 @@ Currently, OpenAPI Snippet supports the following targets (depending on the HTTP
 * `shell_wget`
 * `swift_nsurlsession` (default)
 
+### Prettier Parser
+
+For the parser, while `mdx` or `markdown` are suggested, you can use anything supported by [Prettier](https://prettier.io/docs/en/options.html#parser).
+
+
+### Custom Tags on Schema
+
+- `x-docgenIgnore`: at method level to ignore output generation, for example:
+
+```js
+{
+  ...
+  "paths": {
+    "/pet": {
+      "put": { // this method will be ignored
+        "x-docgenIgnore": true,
+        "summary": "Update an existing pet",
+        ...
+      }
+    }
+  }
+}
+```
+
 ### Templates
 
 For every [**operation**](https://swagger.io/docs/specification/paths-and-operations/) in `paths`, object with all references resolved will be passed to `templates/path.hdb`, please refer to default template for an example in how to use it.
@@ -96,6 +121,20 @@ Please note that before saving, prettify will be executed to format the output, 
 ]}>
 
 <!-- prettier-ignore-end -->
+```
+## Troubleshooting
+- Most common errors happens due a malformed file, to validate and lint your spec for possible errors check [Speccy](https://github.com/wework/speccy).
+- If your specification has multiple paths which map to the same OpenAPI path, you can should set `"x-hasEquivalentPaths": true,` on the root object, example:
+
+```javascript
+{
+  "openapi": "3.0.2",
+  "x-hasEquivalentPaths": true,
+  "info": {
+    ...
+  }
+  ...
+}  
 ```
 
 ## Roadmap
