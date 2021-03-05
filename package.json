@@ -1,6 +1,6 @@
 {
   "name": "@synx-ai/oas3-mdx",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "description": "Convert OpenAPI spec to Markdown files.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -51,6 +51,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^26.0.20",
     "@types/node": "^14.14.31",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
