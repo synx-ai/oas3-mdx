@@ -9,7 +9,7 @@ const templatesThatExists = "./example/templates/mdx";
 const templatesThatNotExists = "./example/templates/jsx";
 
 const urlThatExists = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
-const urlThatNotExists = "https://petstore3.synx.io/api/v3/openapi.json";
+const urlThatNotExists = "https://github.com/synx-ai/oas3-mdx/blob/master/404";
 
 describe("convert()", () => {
 

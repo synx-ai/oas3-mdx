@@ -1,4 +1,4 @@
-"use_strict";
+"use strict";
 
 /**
  * This file loads, bundles and validates an OpenAPI spec.
@@ -48,14 +48,10 @@ const handleHTTPResponse = (url, res, resolve, reject) => {
  */
 const getContentFromURL = (url: string) => {
   return new Promise((resolve, reject) => {
-    if (url.startsWith("http:")) {
-      http
-        .get(url, (res) => {
-          handleHTTPResponse(url, res, resolve, reject);
-        })
-        .on("error", reject);
-    } else if (url.startsWith("https:")) {
-      https
+    if (url.startsWith("http")) {
+      let protocol = url.startsWith("https:") ? https : http;
+
+      protocol
         .get(url, (res) => {
           handleHTTPResponse(url, res, resolve, reject);
         })
