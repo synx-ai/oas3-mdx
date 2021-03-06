@@ -109,7 +109,7 @@ For the parser, while `mdx` or `markdown` are suggested, you can use anything su
 
 For every [**operation**](https://swagger.io/docs/specification/paths-and-operations/) in `paths`, object with all references resolved will be passed to `templates/path.hdb`, please refer to default template for an example in how to use it.
 
-Please note that before saving, prettify will be executed to format the output, you can disable it using the `<!-- prettier-ignore-start -->` tag, exmaple:
+Please note that before saving, prettify will be executed to format the output, you can disable it using the `<!-- prettier-ignore-start -->` tag, example:
 
 ```html
 <!-- prettier-ignore-start -->
@@ -122,6 +122,44 @@ Please note that before saving, prettify will be executed to format the output, 
 
 <!-- prettier-ignore-end -->
 ```
+
+### Using partials
+
+In your `templatesPath` create a `dir` called `partials` every single file with `.hdb` extension within its subdirs will be loaded as partial, using the filename as partial name. Example:
+
+A file named `partials/quote.hdb` with the following code, will create a `quote` partial.
+
+```
+>{{text}}
+```
+
+This partial can be used in your templates as follows:
+
+```markdown
+{{>quote "This text will be quoted."}}
+```
+
+### Using helpers
+
+In your `templatesPath` create a `dir` called `helpers` every single file with `.js` extension within its subdirs will be loaded as a helper, using the filename as the helper name. Example:
+
+A file named `partials/loud.js` with the following code, will create a `load` helper.
+
+```javascript
+// the script should export an anonymous function in order to execute
+// you can use many parameters as needed
+exports.default = function (text) {
+  return text.toUpperCase()
+}
+```
+
+This helper can be used in your templates as follows:
+
+```markdown
+{{loud "This text will be uppercased."}}
+```
+
+
 ## Troubleshooting
 - Most common errors happens due a malformed file, to validate and lint your spec for possible errors check [Speccy](https://github.com/wework/speccy).
 - If your specification has multiple paths which map to the same OpenAPI path, you can should set `"x-hasEquivalentPaths": true,` on the root object, example:

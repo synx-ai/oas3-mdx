@@ -7,6 +7,7 @@ const fileThatExistsInAnotherFormat = "./readme.md";
 
 const templatesThatExists = "./example/templates/mdx";
 const templatesThatNotExists = "./example/templates/jsx";
+const templatesThatExistsCustomized = "./example/templates/custom";
 
 const urlThatExists = "https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore.yaml";
 const urlThatNotExists = "https://github.com/synx-ai/oas3-mdx/blob/master/404";
@@ -21,6 +22,11 @@ describe("convert()", () => {
   // this will test a custom template options, also will test another parser
   it("should execute from file", () => {
     return expect(convert(fileThatExists, { outPath: "./build", templatesPath: templatesThatExists, prettierParser: "markdown" })).resolves.toBeUndefined();
+  });
+
+  // this will test a custom template options, also will test another parser and the use of handlebar partials
+  it("should execute from file", () => {
+    return expect(convert(fileThatExists, { outPath: "./build/custom", templatesPath: templatesThatExistsCustomized })).resolves.toBeUndefined();
   });
 
   // this will test a failed attempt to execute

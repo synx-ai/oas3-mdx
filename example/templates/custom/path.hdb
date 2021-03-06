@@ -1,0 +1,11 @@
+---
+id: {{method.operationId}}
+title: {{method.summary}}
+---
+
+## This will call a partial template to create the quote
+{{>quote text="Hello, World!"}}
+
+Part of this text will be {{>bold text="bold"}}
+
+{{loud "This text will uppercased using a helper"}}

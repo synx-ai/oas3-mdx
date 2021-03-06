@@ -10,6 +10,7 @@ import * as OpenAPISnippet from "openapi-snippet";
 
 import * as prettier from "prettier";
 import bundler from "./bundler";
+import loaders from "./loaders";
 
 /**
  * Helper function to render a block of code
@@ -97,6 +98,9 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
           if (fs.existsSync(outPath)) {
             // ToDo: delete existing path
           }
+
+          loaders.loadHelpers(path.resolve(process.cwd(), path.join(templatesPath, "helpers")));
+          loaders.loadPartials(path.resolve(process.cwd(), path.join(templatesPath, "partials")));
 
           Handlebars.registerHelper("codeSnippet", (content: string, lang: string, title: string) => {
             // render code block
