@@ -36,7 +36,7 @@ jobs:
 
     - name: 🧪 Test
       working-directory: ${{env.template-dir}}
-      run: yarn test
+      run: yarn format && yarn test
 
     - name: 🛠 Build
       working-directory: ${{env.template-dir}}
