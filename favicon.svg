@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   id="svg839"
+   version="1.1"
+   viewBox="0 0 64 64"
+   height="64"
+   width="64">
+  <style>
+     path { fill: #070809; }
+     @media (prefers-color-scheme: dark) {
+       path { fill: #ffffff; }
+     }
+  </style>
+  <g
+     transform="translate(1.3818585,11.297196)"
+     id="g875">
+    <path
+       style="fill-rule:evenodd;stroke:none;stroke-width:1"
+       d="M 40.818452,20.193324 C 41.099003,32.165937 31.376536,41.867922 19.578162,41.388434 8.8938062,40.954461 0.26023709,32.054581 0.00593503,21.212416 -0.27489799,9.240089 9.4478516,-0.46218206 21.245943,0.01702018 31.930581,0.45127933 40.56415,9.3514448 40.818452,20.193324 Z"
+       id="path871" />
+    <path
+       style="fill-rule:evenodd;stroke:none;stroke-width:1"
+       d="M 40.823815,1.3073758e-4 V 41.405609 c 11.273399,0 20.412186,-9.26887 20.412468,-20.702739 0,-11.4338686 -9.139069,-20.70273926242 -20.412468,-20.70273926242 z"
+       id="path869" />
+  </g>
+</svg>
