@@ -27,7 +27,7 @@ jobs:
     - name: 🧬 Readme.md cloning
       uses: canastro/copy-file-action@master
       with:
-        source: "README.md"
+        source: "readme.md"
         target: "gh-pages-template/src/README.md"
 
     - name: ⚙️ Install dependencies
