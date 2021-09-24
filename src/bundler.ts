@@ -97,7 +97,7 @@ const parseContent = (content: any) => {
   try {
     return JSON.parse(content);
   } catch (e) {
-    return YAML.safeLoad(content);
+    return YAML.load(content);
   }
 };
 

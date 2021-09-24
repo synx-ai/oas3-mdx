@@ -71,6 +71,7 @@
   "dependencies": {
     "add": "^2.0.6",
     "handlebars": "^4.7.7",
+    "js-yaml": "^4.1.0",
     "json-schema-ref-parser": "^9.0.7",
     "lodash": "^4.17.21",
     "oas-validator": "^5.0.5",
