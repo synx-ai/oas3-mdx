@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import convert from "../dist";
 
 const fileThatExists = "./example/specs/petstore.json";
