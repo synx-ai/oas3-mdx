@@ -32,12 +32,13 @@ Options:
   -o, --target    target build path                [default: "./build"]
   -t, --templates templates path               [default: "./templates"]
   -c, --snippets  comma separated targets            [default: "shell"]
+  -e, --extension output extension                     [default: "mdx"]
       --help      Show help
 ```
 
 ### JavaScript
 ```javascript
-const convert = require('openapi2md').default;
+const convert = require('@synx-ai/oas3-mdx').default;
 
 // optional arguments are expected as an object, ie:
 convert('./example/petstore.json' /*, { outPath: 'my_path' }*/);
@@ -52,6 +53,7 @@ convert('./example/petstore.json' /*, { outPath: 'my_path' }*/);
 | `Templates dir`    | --templates  | templatesPath        | `./templates` |
 | `Snippet targets`  | --snipetts   | snippetTargets       | `["shell"]`   |
 | `Prettier parser`  | --parser     | prettierParser       | `mdx`         |
+| `Output extension` | --extension  | extension            | `mdx`         |
 
 The tool will try to load the `--templates` relative to current working path first, then will fallback to library path.
 

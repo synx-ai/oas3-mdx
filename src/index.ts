@@ -73,6 +73,9 @@ type Optional = {
 
   /** @default "../templates/" */
   prettierParser?: string;
+
+  /** @default "mdx" */
+  extension?: string;
 };
 
 /**
@@ -89,6 +92,7 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
       templatesPath = "../templates/",
       snippetTargets = ["shell"],
       prettierParser = "mdx",
+      extension = "mdx",
     } = options;
 
     try {
@@ -178,7 +182,7 @@ const convert = (specFile: string, options: Optional = {}): Promise<void> => {
 
                 // render the path using Handlebars and save it
                 fs.writeFileSync(
-                  `${outPath}${pathKey}/${methodKey}.md`,
+                  `${outPath}${pathKey}/${methodKey}.${extension}`,
                   prettier.format(
                     pathTemplate({
                       slug: _.kebabCase(`${pathKey}-${methodKey}`),

@@ -42,6 +42,12 @@ const argv = yargs(hideBin(process.argv))
     type: "string",
     default: "mdx",
   })
+  .option("extension", {
+    alias: "e",
+    describe: "output extension",
+    type: "string",
+    default: "mdx",
+  })
   .help().argv;
 
 // call the convert function from ./index.js
@@ -50,6 +56,7 @@ convert(path.resolve(process.cwd(), argv.spec), {
   templatesPath: path.resolve(argv.templates),
   snippetTargets: argv.snippets.split(","),
   prettierParser: argv.parser,
+  extension: argv.extension,
 })
   .then(() => {
     console.log(green("Done! ✨"));
